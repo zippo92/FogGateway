@@ -7,6 +7,7 @@ exports.deleteTable = deleteTableFn;
 exports.createUsersTable = createUsersTableFn;
 exports.pushResult = pushResultFn;
 exports.getResult = getResultFn;
+exports.isEmptyObject = isEmptyObjectFn;
 
 
 var idExists = false;
@@ -171,5 +172,13 @@ function deleteTableFn(tableName)
     });
 }
 
+function isEmptyObjectFn(obj) {
+    for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 //getAllUsersFn();

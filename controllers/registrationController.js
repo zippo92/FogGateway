@@ -38,9 +38,9 @@ function addUserFn(req, res)
             if (err) {
                 console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
             } else {
-                if (JSON.stringify(data, null, 2) === {}) {
+                if (user.isEmptyObject(data)) {
                     user.addUser(req.body.idUser, req.body.password);
-                    console.log("Added in table Users ("+req.body.idUser+", "+req.body.password);
+                    console.log("Added in table Users ("+req.body.idUser+", "+req.body.password+")");
                     res.send({status: "REGISTRATION_SUCCESS"})
                 }
                 else{
@@ -51,3 +51,4 @@ function addUserFn(req, res)
         });
     }
 }
+
