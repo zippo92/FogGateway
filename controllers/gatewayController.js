@@ -9,6 +9,7 @@ var master = require('../model/masterServer');
 exports.subscribe = subscribeFn;
 exports.findMaster = findMasterFn;
 
+
 //iscrizione dei master degli edge servers.
 function subscribeFn(req, res) {
 
@@ -54,6 +55,8 @@ function findMasterFn(req, res) {
             masterIp: masterIp
         });
 }
+
+
 
 
 
