@@ -13,8 +13,8 @@ exports.login = loginFn;
 var AWS = require("aws-sdk");
 
 AWS.config.update({
-    region: "eu-centrale-1",
-    endpoint: "http://localhost:8000"
+    region: "us-east-2",
+    endpoint: "https://dynamodb.us-east-2.amazonaws.com"
 });
 
 function loginFn(req, res)

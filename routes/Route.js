@@ -15,6 +15,6 @@ module.exports = function (app) {
     app.get('/api/lb/edge/subscribe',gatewayController.findMaster);
 
     app.post('/api/lb/edge/login', loginController.login);
-    app.post('/api/lb/edge/registration', registrationController.addUser);
+    app.post('/api/lb/edge/registration', registrationController.addUserIfNotExists);
 
 };

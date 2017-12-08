@@ -9,6 +9,7 @@ exports.pushResult = pushResultFn;
 exports.getResult = getResultFn;
 exports.isEmptyObject = isEmptyObjectFn;
 
+var process = require('process');
 
 var idExists = false;
 
@@ -27,8 +28,8 @@ function getResultFn()
 var AWS = require("aws-sdk");
 
 AWS.config.update({
-    region: "eu-centrale-1",
-    endpoint: "http://localhost:8000"
+    region: "us-east-2",
+    endpoint: "dynamodb.us-east-2.amazonaws.com"
 });
 
 var ddb = new AWS.DynamoDB();
@@ -112,6 +113,7 @@ function getUserFn(idUser)
 
 function createUsersTableFn()
 {
+    console.log("I'm creating table Users");
     var params = {
         TableName : 'Users',
         KeySchema: [
@@ -126,35 +128,15 @@ function createUsersTableFn()
         }
     };
 
-    var exists = false;
-
-    //Controllo che la table non esista prima di crearla.
-    ddb.listTables({}, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else
-        {
-            // successful response
-            data.TableNames.forEach(function (t) {
-//                console.log("----"+t);
-                if(t==='Users')
-                {
-                    exists = true;
-//                    console.log("Table Users already exists\n");
-                }
-
-            });
-            //Se la table non esiste, la creo.
-            if(!exists) {
-                ddb.createTable(params, function (err, data) {
-                    if (err) {
-                        console.error("Unable to create table: ", err.message);
-                    } else {
-                        console.log("Created table Users"); //. Table description JSON:", JSON.stringify(data, null, 2));
-                    }
-                });
-            }
+    ddb.createTable(params, function (err, data) {
+        if (err) {
+            console.error("Unable to create table: ", err.message);
+        } else {
+            console.log("Created table Users"); //. Table description JSON:", JSON.stringify(data, null, 2));
+            return;
         }
     });
+
 }
 
 function deleteTableFn(tableName)

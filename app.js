@@ -4,6 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var request = require('request');
 var ip = require('ip');
+var user = require('./model/users');
+
 
 // create a new express server
 var app = express();
@@ -45,3 +47,15 @@ app.listen(port, '0.0.0.0', function() {
   // print a message when the server starts listening
   console.log("server starting on localhost. Ip: "+ip.address());
 });
+
+var AWS = require("aws-sdk");
+
+AWS.config.update({
+    region: "us-east-2",
+    endpoint: "https://dynamodb.us-east-2.amazonaws.com"
+});
+
+var ddb = new AWS.DynamoDB();
+
+//TODO Adesso creo user table all'avvio del gateway, se risolto il todo in registrationController.js, si può cancellare e far creare table quando si fa una nuova registrazione.
+user.createUsersTable();
