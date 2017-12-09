@@ -6,7 +6,6 @@ module.exports = function (app) {
     var gatewayController = require('../controllers/gatewayController');
 
     app.post('/api/lb/edge/subscribe',gatewayController.subscribe);
-
-
-    app.get('/api/lb/edge/subscribe',gatewayController.findMaster)
+    app.get('/api/lb/edge/subscribe',gatewayController.findMaster);
+    app.post('/api/lb/edge/notifyDelete', gatewayController.notifyDelete);
 };

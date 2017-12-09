@@ -5,9 +5,11 @@
 
 
 var master = require('../model/masterServer');
+var config = require('../config/config');
 
 exports.subscribe = subscribeFn;
 exports.findMaster = findMasterFn;
+exports.notifyDelete = notifyDeleteFn;
 
 //iscrizione dei master degli edge servers.
 function subscribeFn(req, res) {
@@ -68,6 +70,37 @@ function findPositionFn(ip) {
     }
 
     return -1;
+}
+
+function notifyDeleteFn(req, res){
+    var list = master.getMasterServerList();
+    var ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
+
+    if(req.body.type === "NOTIFY_DELETE") {
+        list.forEach(function(master) {
+            if(master.ip !== ip) {
+                var obj = {
+                    url: 'http://' + master.ip + ':' + config.edgePort + config.masterDeleteApi,
+                    method: 'POST',
+                    json: {
+                        type: 'NOTIFY_DELETE',
+                        relPath: req.body.path,
+                        idUser: req.body.idUser
+                    }
+                };
+
+                request(obj, function(err, res) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log("Notified");
+                        res.end();
+                    }
+                })
+            }
+        })
+    }
 }
 
 
