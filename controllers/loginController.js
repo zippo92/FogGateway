@@ -4,8 +4,8 @@
 
 
 var request = require('request');
-
 var user = require('../model/users');
+var master = require('../model/masterServer');
 
 exports.login = loginFn;
 
@@ -19,6 +19,8 @@ AWS.config.update({
 
 function loginFn(req, res)
 {
+    var list = master.getMasterServerList();
+
     if(req.body.type === 'LOGIN')
     {
         console.log(req.body.idUser+" wants to login.");
@@ -48,7 +50,8 @@ function loginFn(req, res)
                     {
                         console.log("Login success!");
                         res.send({
-                            status: "LOGIN_SUCCESS"
+                            status: "LOGIN_SUCCESS",
+                            masterIp: list[0].ip   // restituisco solo il primo per ora
                         });
                     }
                     else{
