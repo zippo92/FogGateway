@@ -10,7 +10,7 @@ exports.getResult = getResultFn;
 exports.isEmptyObject = isEmptyObjectFn;
 
 var process = require('process');
-
+var dynamoController = require("../controllers/dynamoController");
 var idExists = false;
 
 function pushResultFn(exists)
@@ -23,20 +23,8 @@ function getResultFn()
     return idExists;
 }
 
-
-// Load the SDK for JavaScript
-var AWS = require("aws-sdk");
-
-AWS.config.update({
-    region: "us-east-2",
-    endpoint: "dynamodb.us-east-2.amazonaws.com"
-});
-
-var ddb = new AWS.DynamoDB();
-
-
 function onScanFn(err, data) {
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = dynamoController.getDynamoDocumentClient();
 
     if (err) {
         console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
@@ -59,7 +47,7 @@ function onScanFn(err, data) {
 
 function getAllUsersFn()
 {
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = dynamoController.getDynamoDocumentClient();
     var params = {
         TableName: 'Users'
     };
@@ -69,7 +57,7 @@ function getAllUsersFn()
 
 function addUserFn(idUser, password)
 {
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = dynamoController.getDynamoDocumentClient();
     console.log("Adding user "+idUser+" and password "+password+" in Users table");
 
     var params = {
@@ -82,15 +70,16 @@ function addUserFn(idUser, password)
     docClient.put(params, function(err, data) {
         if (err){
             console.log(err); // an error occurred
-        }else {
-            console.log(data); // successful response
         }
+        // else {
+        //     console.log(data); // successful response
+        // }
     });
 }
 
 function getUserFn(idUser)
 {
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = dynamoController.getDynamoDocumentClient();
 
     var params = {
         TableName: 'Users',
@@ -114,6 +103,7 @@ function getUserFn(idUser)
 function createUsersTableFn()
 {
     console.log("I'm creating table Users");
+    var ddb = dynamoController.getDynamoDb();
     var params = {
         TableName : 'Users',
         KeySchema: [
@@ -141,6 +131,8 @@ function createUsersTableFn()
 
 function deleteTableFn(tableName)
 {
+    var ddb = dynamoController.getDynamoDb();
+
     var params = {
         TableName : tableName
     };
@@ -163,4 +155,3 @@ function isEmptyObjectFn(obj) {
     return true;
 }
 
-//getAllUsersFn();

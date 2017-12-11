@@ -1,25 +1,12 @@
-
 var user = require('../model/users');
 var Promise = require('promise');
-
-
-
+var dynamoController = require('./dynamoController');
 exports.addUserIfNotExists = addUserIfNotExistsFn;
 exports.addUser = addUserFn;
 
-var AWS = require("aws-sdk");
-
-AWS.config.update({
-    region: "us-east-2",
-    endpoint: "https://dynamodb.us-east-2.amazonaws.com"
-});
-
-var ddb = new AWS.DynamoDB();
-
-
 function addUserIfNotExistsFn(req, res)
 {
-    var docClient = new AWS.DynamoDB.DocumentClient();
+    var docClient = dynamoController.getDynamoDocumentClient();
 
     console.log("Bo "+req.body.idUser);
 
@@ -51,7 +38,7 @@ function addUserFn(req, res)
 {
 
     console.log("Arrived request to add "+req.body.idUser+" - "+req.body.password);
-
+    var ddb = dynamoController.getDynamoDb;
 
     if(req.body.type === "REGISTRATION") {
         //Crea la table solo se ancora non esiste.
