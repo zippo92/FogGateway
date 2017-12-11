@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "aws-sdk": "^2.167.0",
     "body-parser": "^1.17.2",
     "express": "4.13.x",
     "ip": "^1.1.5",
