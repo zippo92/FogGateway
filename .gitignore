@@ -64,3 +64,5 @@ typings/
 .idea/modules.xml
 .idea/workspace.xml
 JetBrains.Dockerfile
+/config/dynamoConfiguration.js
+config/dynamoConfiguration.js
