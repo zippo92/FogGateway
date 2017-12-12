@@ -9,7 +9,6 @@ exports.pushResult = pushResultFn;
 exports.getResult = getResultFn;
 exports.isEmptyObject = isEmptyObjectFn;
 
-var process = require('process');
 
 var idExists = false;
 

@@ -1,6 +1,5 @@
 
 var user = require('../model/users');
-var Promise = require('promise');
 
 
 

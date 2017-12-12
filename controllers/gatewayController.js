@@ -18,6 +18,7 @@ function subscribeFn(req, res) {
     var ip = (req.headers['x-forwarded-for'] || '').split(',')[0] || req.connection.remoteAddress;
 
     if (req.body.type === "MASTER") {
+        console.log("Added master "+ip);
         master.pushMasterServer({ip: ip});
     }
     else if(req.body.type === "PROCLAMATION") {
