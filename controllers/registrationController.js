@@ -1,6 +1,7 @@
 var user = require('../model/users');
-var Promise = require('promise');
+
 var dynamoController = require('./dynamoController');
+
 exports.addUserIfNotExists = addUserIfNotExistsFn;
 exports.addUser = addUserFn;
 

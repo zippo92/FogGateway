@@ -9,8 +9,8 @@ exports.pushResult = pushResultFn;
 exports.getResult = getResultFn;
 exports.isEmptyObject = isEmptyObjectFn;
 
-var process = require('process');
 var dynamoController = require("../controllers/dynamoController");
+
 var idExists = false;
 
 function pushResultFn(exists)
