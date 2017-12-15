@@ -34,6 +34,7 @@ function subscribeFn(req, res) {
         else {
             master.setMasterServerIpByPos(oldMasterPos, ip);
             console.log("Proclamation by: " + ip);
+            clearTimeout(electionTimer);
             res.send({status: 'ACK'});
         }
     }
