@@ -10,7 +10,9 @@ var config = require('../config/config');
 exports.subscribe = subscribeFn;
 exports.findMaster = findMasterFn;
 exports.notifyDelete = notifyDeleteFn;
+exports.electionState = electionStateFn;
 
+var electionTimer;
 
 //iscrizione dei master degli edge servers.
 function subscribeFn(req, res) {
@@ -102,6 +104,15 @@ function notifyDeleteFn(req, res){
                 })
             }
         })
+    }
+}
+
+function electionStateFn(req, res){
+    if(req.body.type === "ELECTION_STATE"){
+        electionTimer = setTimeout(function(){
+            console.log("Repeat Election");
+            res.send({type: "REPEAT_ELECTION"});
+        }, config.electionTime);
     }
 }
 

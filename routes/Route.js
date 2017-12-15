@@ -14,5 +14,6 @@ module.exports = function (app) {
     app.post('/api/lb/edge/notifyDelete', gatewayController.notifyDelete);
     app.post('/api/lb/edge/login', loginController.login);
     app.post('/api/lb/edge/registration', registrationController.addUserIfNotExists);
+    app.post('/api/lb/edge/election', gatewayController.electionState);
 
 };

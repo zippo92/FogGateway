@@ -4,7 +4,8 @@
 
 var config = {
     edgePort: '6601',
-    masterDeleteApi: '/api/master/deleteFile'
+    masterDeleteApi: '/api/master/deleteFile',
+    electionTime: 60000
 };
 
 module.exports = config;
